@@ -1,0 +1,55 @@
+# 额外的 git config 配置，为了使用 delta 提供的 diff 高亮
+# git 全局配置说明，为了git diff等更好看 git config --global --edit
+# delta 使用的是项目 dandavison/delta，以下是 git config 部分配置
+# 结合 vim 的term功能和窗口的最大化，已经非常好用了，不必使用其他组件
+
+[core]
+  pager = delta
+  editor = vi -f
+  excludesfile = /Users/gz00144ml/.gitignore_global
+
+[interactive]
+  diffFilter = delta --color-only
+
+[delta]
+  navigate = true  # use n and N to move between diff sections
+  side-by-side = true
+  commit-decoration-style = none
+  dark = true
+  tabs = 2
+  rue-color = always
+  relative-paths = true
+  file-added-label = [+]
+  file-copied-label = [C]
+  file-decoration-style = none
+  file-modified-label = [M]
+  file-removed-label = [-]
+  file-renamed-label = [R]
+  file-style = 232 bold 184
+  hunk-header-decoration-style = none
+  hunk-header-file-style = "#999999"
+  hunk-header-line-number-style = bold "#03a4ff"
+  hunk-header-style = file line-number syntax
+  line-numbers = true
+  line-numbers-left-format = "{nm:>4}┊"
+  line-numbers-right-format = "{np:>4}│"
+  line-numbers-left-style = black
+  line-numbers-minus-style = "#B10036"
+  line-numbers-plus-style = "#03a4ff"
+  line-numbers-right-style = black
+  line-numbers-zero-style = "#999999"
+  minus-emph-style = syntax bold "#780000"
+  minus-style = syntax "#400000"
+  plus-emph-style = syntax bold "#007800"
+  plus-style = syntax "#004000"
+  whitespace-error-style = "#280050" reverse
+  zero-style = syntax
+  ; syntax-theme = Visual Studio Dark+
+  ; syntax-theme = Solarized (dark)
+  syntax-theme = Nord
+
+[merge]
+  conflictstyle = zdiff3
+
+[diff]
+  colorMoved = default
