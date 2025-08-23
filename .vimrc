@@ -101,6 +101,8 @@
 " ===========================================
 call plug#begin()
 " NOTE 插件所依赖的组件是否正常，可以通过neovim的 :checkhealth 命令检查
+" NOTE 对于neovim，需要将 .config/nvim/init.vim 软链到 ~/.vimrc
+" ~/.vim/site/autoload 软链到 .vim/autoload ，以便vim和neovim 共用 vim-plug
 " 简明的文档搜索，比 Man 更容易懂，但可能不全面
 " 终端可以安装 tldr，对于vim，只需要安装本插件就行
 Plug 'wlemuel/vim-tldr'
