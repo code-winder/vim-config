@@ -602,7 +602,19 @@ endfunction
 let g:unite_force_overwrite_statusline = 0
 let g:vimfiler_force_overwrite_statusline = 0
 let g:vimshell_force_overwrite_statusline = 0
- 
+
+" 设置python3命令的路径，用which python3查看
+" 供 ycm 使用
+" NOTE 这里一般都需要修改，可以通过命令 :checkhealth 得到提示
+let g:python3_host_prog = "/opt/homebrew/bin/python3.11"
+let g:perl_host_prog = '/opt/homebrew/bin/perl'
+
+set rtp+=~/.fzf
+set rtp+=~/.vim
+" 这里去掉或者替换成自己的
+set rtp+=/opt/homebrew/bin
+
+
 " quickfix预览文件
 " 结合函数引用命令，可预览函数定义和引用
 " neovim 使用该插件有问题
@@ -636,10 +648,6 @@ set tabstop=2
 set shiftwidth=2
 set expandtab
 
-set rtp+=~/.fzf
-set rtp+=~/.vim
-set rtp+=/opt/homebrew/bin
-
 " 显示行号
 set number
 augroup numbertoggle
@@ -657,11 +665,6 @@ set signcolumn=yes
 
 " 保存文件时候自动去除行尾空格
 autocmd BufWritePre *.md,*.go :%s/\s\+$//e
-
-" 设置python3命令的路径，用which python3查看
-" 供 ycm 使用
-let g:python3_host_prog = "/opt/homebrew/bin/python3.11"
-let g:perl_host_prog = '/opt/homebrew/bin/perl'
 
 " 禁用 vi 兼容模式
 set nocompatible
