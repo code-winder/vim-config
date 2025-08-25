@@ -1,0 +1,106 @@
+return {
+  {
+    "airblade/vim-rooter",
+    opts = {},
+    -- event = "VeryLazy",
+    --- 设置vim的工作目录，便于fzf搜索
+    config = function(_, opts)
+      vim.cmd([[
+      let g:rooter_patterns = ['.git', 'Makefile']
+      let g:rooter_silent_chdir = 1
+      ]])
+    end,
+  },
+  {
+    --- tmux和vim中tab之间的跳转
+    --- tmux.conf也要做相应配置，具体参考插件说明
+    --- 更详细的tmux配置需要根据github仓库 gpakosz/.tmux
+    --- <ctrl-h> => Left
+    --- <ctrl-j> => Down
+    --- <ctrl-k> => Up
+    --- <ctrl-l> => Right
+    --- <ctrl-\> => Previous split
+    "christoomey/vim-tmux-navigator",
+    opt = {},
+    event = "VeryLazy",
+  },
+  {
+    "wlemuel/vim-tldr",
+    --- 简明的文档搜索，比 Man 更容易懂，但可能不全面
+    --- 终端可以安装 tldr，对于vim，只需要安装本插件就行
+    --- Run :Tldr [command] to find the tldr of command.
+    --- Run :TldrUpdateDocs to get or update tldr docs.
+    --- 如果查不到，可以先尝试用 Man 命令，如果不好理解，可以用 :TldrUpdateDocs 更新，
+    --- 再用 Tldr 命令
+    --- Tldr 命令不好记，用 Ask 作为别名
+    opt = {},
+    event = "VeryLazy",
+    config = function(_, opts)
+      vim.cmd("command -nargs=* Ask Tldr <args>")
+    end,
+  },
+  {
+    "HustLion/q-quit",
+    opt = {},
+    config = function(_, opts)
+      vim.cmd("let g:q_quit_close_when_only_one_window = 1")
+    end,
+  },
+  {
+    "kshenoy/vim-signature",
+    ---  m.           If no mark on line, place the next available mark. Otherwise, remove (first) existing mark.
+    ---  m<Space>     Delete all marks from the current buffer
+    ---  m<BS>        Remove all markers
+    ---  m/           Open location list and display marks from current buffer（也可以借助fzf的 :Marks 命令，但弹窗不好用）
+    opt = {},
+    event = "VeryLazy",
+  },
+  {
+    "brglng/vim-im-select",
+    --- 中英文输入法自动切换
+    --- 需要安装 im-select（安装方法参看其github仓库 https://github.com/daipeihust/im-select）
+    opt = {},
+    event = "VeryLazy",
+    config = function(_, opts)
+      vim.cmd([[
+      let g:im_select_default = 'com.apple.keylayout.ABC'   " The default value on macOS
+      let g:im_select_enable_cmd_line = 0
+      ]])
+    end,
+  },
+  {
+    "mbbill/undotree",
+    --- 修改undo，和git互补使用
+    opt = {},
+    event = "VeryLazy",
+    config = function(_, opts)
+      --- 简化 undo 命令输入
+      vim.cmd("command Undo UndotreeToggle")
+    end,
+  },
+  {
+    "junegunn/vim-peekaboo",
+    --- vim寄存器管理
+    --- Peekaboo will show you the contents of the registers on the sidebar when you
+    --- hit " or @ in normal mode or <CTRL-R> in insert mode. The sidebar is
+    --- automatically closed on subsequent key strokes."
+    opt = {},
+    event = "VeryLazy",
+  },
+  {
+    "t9md/vim-quickhl",
+    --- 着重显示当前 word，和高亮感兴趣的 word
+    opt = {},
+    event = "VeryLazy",
+    config = function(_, opts)
+      vim.cmd([[
+      let g:quickhl_cword_enable_at_startup = 1
+      autocmd VimEnter * hi QuickhlCword gui=underline cterm=underline term=underline
+      nmap <leader>k <Plug>(quickhl-manual-this-whole-word)
+      xmap <leader>k <Plug>(quickhl-manual-this-whole-word)
+      nmap <leader>K <Plug>(quickhl-manual-reset)
+      vmap <leader>K <Plug>(quickhl-manual-reset)
+      ]])
+    end,
+  },
+}
