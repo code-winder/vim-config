@@ -1,5 +1,34 @@
 return {
   {
+    "ahmedkhalf/project.nvim",
+    opts = {
+      manual_mode = true,
+    },
+    event = "VeryLazy",
+    config = function(_, opts)
+      require("project_nvim").setup(opts)
+      local opt = { noremap = true, silent = true }
+      vim.api.nvim_set_keymap("n", "<leader>fp", "<Cmd>lua Snacks.picker.projects()<CR>", opt)
+
+      -- LazyVim.on_load("snacks.nvim", function()
+      --   local sn = require("snacks")
+      --   sn.picker("projects")
+      -- end)
+    end,
+  },
+  {
+    "folke/snacks.nvim",
+    optional = true,
+    opts = function(_, opts)
+      table.insert(opts.dashboard.preset.keys, 3, {
+        action = "<Cmd>lua Snacks.picker.projects()<CR>",
+        desc = "Projects",
+        icon = " ",
+        key = "p",
+      })
+    end,
+  },
+  {
     "airblade/vim-rooter",
     opts = {},
     -- event = "VeryLazy",
