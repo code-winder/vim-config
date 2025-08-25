@@ -1,17 +1,5 @@
 return {
   {
-    "airblade/vim-rooter",
-    opts = {},
-    -- event = "VeryLazy",
-    --- 设置vim的工作目录，便于fzf搜索
-    config = function(_, opts)
-      vim.cmd([[
-      let g:rooter_patterns = ['.git', 'Makefile']
-      let g:rooter_silent_chdir = 1
-      ]])
-    end,
-  },
-  {
     --- tmux和vim中tab之间的跳转
     --- tmux.conf也要做相应配置，具体参考插件说明
     --- 更详细的tmux配置需要根据github仓库 gpakosz/.tmux
@@ -23,21 +11,6 @@ return {
     "christoomey/vim-tmux-navigator",
     opt = {},
     event = "VeryLazy",
-  },
-  {
-    "wlemuel/vim-tldr",
-    --- 简明的文档搜索，比 Man 更容易懂，但可能不全面
-    --- 终端可以安装 tldr，对于vim，只需要安装本插件就行
-    --- Run :Tldr [command] to find the tldr of command.
-    --- Run :TldrUpdateDocs to get or update tldr docs.
-    --- 如果查不到，可以先尝试用 Man 命令，如果不好理解，可以用 :TldrUpdateDocs 更新，
-    --- 再用 Tldr 命令
-    --- Tldr 命令不好记，用 Ask 作为别名
-    opt = {},
-    event = "VeryLazy",
-    config = function(_, opts)
-      vim.cmd("command -nargs=* Ask Tldr <args>")
-    end,
   },
   {
     "HustLion/q-quit",
