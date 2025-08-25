@@ -13,3 +13,4 @@
 + 先初始化本地的 .config/nvim 目录可以参考项目 https://github.com/LazyVim/LazyVim 提供的详细文档说明。
 + 把 config/nvim/config 和 config/nvim/plugins 下的文件覆盖本地目录 .config 对应路径下的已有的文件即可。
 + 去掉 .config/plugins 中多余的文件。
++ 能用lazyVim自带的插件的，尽量用它的。因为好管理也好更新，一般没有兼容问题。额外的插件用命令 :LazyExtras，或者在启动页选择相应的入口。
