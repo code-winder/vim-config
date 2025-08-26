@@ -69,10 +69,10 @@ return {
       vim.cmd([[
       let g:quickhl_cword_enable_at_startup = 1
       autocmd VimEnter * hi QuickhlCword gui=underline cterm=underline term=underline
-      nmap <leader>k <Plug>(quickhl-manual-this-whole-word)
-      xmap <leader>k <Plug>(quickhl-manual-this-whole-word)
-      nmap <leader>K <Plug>(quickhl-manual-reset)
-      vmap <leader>K <Plug>(quickhl-manual-reset)
+      nmap \k <Plug>(quickhl-manual-this-whole-word)
+      xmap \k <Plug>(quickhl-manual-this-whole-word)
+      nmap \K <Plug>(quickhl-manual-reset)
+      vmap \K <Plug>(quickhl-manual-reset)
       ]])
     end,
   },
