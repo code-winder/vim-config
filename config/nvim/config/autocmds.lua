@@ -11,15 +11,6 @@ local function augroup(name)
   return vim.api.nvim_create_augroup("lazyvim_" .. name, { clear = true })
 end
 
-vim.api.nvim_create_autocmd({ "BufLeave", "FocusLost", "InsertEnter", "WinLeave" }, {
-  pattern = { "*" },
-  callback = function()
-    if vim.o.number and vim.fn.mode() ~= "i" then
-      vim.o.relativenumber = true
-    end
-  end,
-})
-
 --- 保存文件时候自动去除行尾空格
 vim.api.nvim_create_autocmd({ "BufWritePre" }, {
   pattern = { "*.md", "*.go" },
@@ -27,8 +18,6 @@ vim.api.nvim_create_autocmd({ "BufWritePre" }, {
     vim.cmd(":%s/s+$//e")
   end,
 })
-
---- 记住上次文件打开位置
 
 -- 根据不同的场景显示行号
 vim.api.nvim_create_autocmd({ "BufEnter", "FocusGained", "InsertLeave", "WinEnter" }, {
@@ -46,14 +35,6 @@ vim.api.nvim_create_autocmd({ "BufLeave", "FocusLost", "InsertEnter", "WinLeave"
     if vim.o.number and vim.fn.mode() ~= "i" then
       vim.o.relativenumber = true
     end
-  end,
-})
-
---- 保存文件时候自动去除行尾空格
-vim.api.nvim_create_autocmd({ "BufWritePre" }, {
-  pattern = { "*.md", "*.go" },
-  callback = function()
-    vim.cmd(":%s/s+$//e")
   end,
 })
 
