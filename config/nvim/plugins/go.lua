@@ -34,6 +34,6 @@ return {
     --- 打开第一个文件会没有高亮，可以用命令 :e 生效
     --- 或者跳转也可以重新渲染高亮
     opt = {},
-    -- event = "VeryLazy",
+    event = "VeryLazy",
   },
 }
