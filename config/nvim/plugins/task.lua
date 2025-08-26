@@ -7,7 +7,7 @@ return {
     config = function(_, opts)
       vim.cmd([[
       let g:tada_todo_style = 'ascii'
-      let g:tada_todo_pane_file = '$HOME/Tadafile'
+      let g:tada_todo_pane_file = $HOME . '/Tadafile'
       "- Topics:
       "  > 本插件的使用说明
       "  > \td 打开或关闭todo窗口（也可以用命令 :TadaTodo）
