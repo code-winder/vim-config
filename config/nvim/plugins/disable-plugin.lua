@@ -23,4 +23,8 @@ return {
     "junegunn/vim-peekaboo",
     enabled = false,
   },
+  {
+    "tpope/vim-commentary",
+    enabled = false,
+  },
 }
