@@ -44,6 +44,7 @@ return {
   {
     "mbbill/undotree",
     --- 修改undo，和git互补使用
+    --- 为lazyvim的 <leader>su 搜索 undo 提供持久化支持，否则一关就没有undo
     opt = {},
     event = "VeryLazy",
     config = function(_, opts)
