@@ -1,13 +1,5 @@
 return {
   {
-    "benmills/vim-golang-alternate",
-    --- :A will open the current file's tests or the current test's implementation based on what is currently opened.
-    --- :AS will act the same as :A but will move the current file to a new buffer in a split.
-    --- :AV will act the same as :AS but with a vertical split.
-    opt = {},
-    event = "VeryLazy",
-  },
-  {
     "buoto/gotests-vim",
     --- 模版一
     --- 该 templates 来自git仓库 dotLou/goteststemplates
