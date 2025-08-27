@@ -6,6 +6,8 @@
 [core]
   pager = delta
   editor = vi -f
+  # 用 neovim 的需要用以下替代：
+  # editor = nvim -f
   excludesfile = /Users/gz00144ml/.gitignore_global
 
 [interactive]
