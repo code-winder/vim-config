@@ -671,4 +671,17 @@ return {
       ]])
     end,
   },
+  {
+    "arp242/switchy.vim",
+    --- :A will open the current file's tests or the current test's implementation based on what is currently opened.
+    --- :AS will act the same as :A but will move the current file to a new buffer in a split.
+    --- :AV will act the same as :AS but with a vertical split.
+    opt = {},
+    event = "VeryLazy",
+    config = function(_, opts)
+      vim.cmd([[
+      command! A call switchy#switch('vsp', 'wincmd p | :e')
+      ]])
+    end,
+  },
 }
