@@ -5,9 +5,9 @@
 
 [core]
   pager = delta
-  editor = vi -f
-  # 用 neovim 的需要用以下替代：
-  # editor = nvim -f
+  editor = nvim -f
+  # 用 vim 的需要用以下替代：
+  # editor = vim -f
   excludesfile = /Users/gz00144ml/.gitignore_global
 
 [interactive]
