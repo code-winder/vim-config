@@ -28,11 +28,18 @@
 + leader-uL Toggle Relative Number
 + ctrl-B Scroll Backward
 + ctrl-f Scroll Forward
++ leader-z 或者 leader-Z Toggle Zen Mode
 
 ## code 有关
 
 + leader-gb Git Blame Line，leader-g 打头的一般与git有关，可以先按，右下角会有提示
 + leader-gs Git Status
++ leader-gd Git Diff (Hunks)
++ leader-gb Git branch
++ leader-gl Git Log
++ leader-gL Git Log Line（当前文件当前行的变更历史）
++ leader-gf Git Log file
++ leader-gg lazygit 及其操作
 + leader-us Toggle Spelling
 + leader-ud Toggle Diagnostics
 + ctrl-/ 打开或关闭底部终端
