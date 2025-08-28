@@ -25,4 +25,5 @@ return {
     opt = {},
     event = "VeryLazy",
   },
+  { "code-winder/go-fillstruct-vim" },
 }
