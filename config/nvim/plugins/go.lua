@@ -16,12 +16,14 @@ return {
     config = function(_, opts)
       vim.cmd("let g:gotests_template_dir = $HOME . '/.vim/gotests-template/templates2'")
     end,
+    cmd = { "GoTests", "GoTestsAll" },
   },
   {
     "charlespascoe/vim-go-syntax",
     --- 加强版 go 语法高亮
     --- 打开第一个文件会没有高亮，可以用命令 :e 生效
     --- 或者跳转也可以重新渲染高亮
+    --- NOTE: 在lazyvim中没有任何效果，已经disable
     opt = {},
     event = "VeryLazy",
   },
@@ -56,6 +58,7 @@ return {
   {
     "fang2hou/go-impl.nvim",
     --- 对所在结构体给出某个 interface 的空实现，比如json编解码
+    cmd = { "GoImplOpen" },
     ft = "go",
     dependencies = {
       "MunifTanjim/nui.nvim",
@@ -128,9 +131,9 @@ return {
         last = "☉", -- last level icon
       },
       hl = {
-        current_module = "guifg=Green", -- highlight cwd module line
-        others_module = "guifg=Black", -- highlight others module line
-        cursorline = "guibg=Gray guifg=White", -- hl  window cursorline
+        -- current_module = "guifg=Green", -- highlight cwd module line
+        -- others_module = "guifg=Black", -- highlight others module line
+        -- cursorline = "guibg=Gray guifg=White", -- hl  window cursorline
       },
       keymap = {
         --global keymap
@@ -150,9 +153,13 @@ return {
       },
     },
   },
-  { "code-winder/go-fillstruct-vim" },
+  {
+    "code-winder/go-fillstruct-vim",
+    cmd = { "GoFillStruct" },
+  },
   {
     "code-winder/go.nvim",
+    --- go 工具集，很多以 Go 打头的命令
     dependencies = { -- optional packages
       "ray-x/guihua.lua",
       "neovim/nvim-lspconfig",
