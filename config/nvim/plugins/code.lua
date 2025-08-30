@@ -1,693 +1,200 @@
 return {
   {
-    "ahmedkhalf/project.nvim",
-    opts = {
-      manual_mode = true,
-    },
+    "buoto/gotests-vim",
+    --- 模版一
+    --- 该 templates 来自git仓库 dotLou/goteststemplates
+    --- 用 testtify 的 require 包，某个test函数失败就立马停止
+    --- let g:gotests_template_dir = '$HOME/.vim/go-tests-template/goteststemplates/templates'
+    --- 模版二
+    --- 该 templates 来自git仓库 ras0q/gotests-template
+    --- 用 https://github.com/google/go-cmp 包做断言
+    --- 需要在 templates2 的header.tmpl 把 cmp 的包路径添加进去
+    --- Call :GoTests to generate a test for the function at the current line or functions selected in visual mode.
+    --- Call :GoTestsAll to generate tests for all functions in the current buffer.
+    opt = {},
     event = "VeryLazy",
     config = function(_, opts)
-      require("project_nvim").setup(opts)
-      local opt = { noremap = true, silent = true }
-      vim.api.nvim_set_keymap("n", "<leader>fp", "<Cmd>lua Snacks.picker.projects()<CR>", opt)
-
-      -- LazyVim.on_load("snacks.nvim", function()
-      --   local sn = require("snacks")
-      --   sn.picker("projects")
-      -- end)
+      vim.cmd("let g:gotests_template_dir = $HOME . '/.vim/gotests-template/templates2'")
     end,
+    cmd = { "GoTests", "GoTestsAll" },
   },
   {
-    "folke/snacks.nvim",
-    optional = true,
-    opts = function(_, opts)
-      table.insert(opts.dashboard.preset.keys, 3, {
-        action = "<Cmd>lua Snacks.picker.projects()<CR>",
-        desc = "Projects",
-        icon = " ",
-        key = "p",
-      })
-    end,
+    "charlespascoe/vim-go-syntax",
+    --- 加强版 go 语法高亮
+    --- 打开第一个文件会没有高亮，可以用命令 :e 生效
+    --- 或者跳转也可以重新渲染高亮
+    --- NOTE: 在lazyvim中没有任何效果，已经disable
+    opt = {},
+    event = "VeryLazy",
   },
   {
-    "folke/snacks.nvim",
-    priority = 1000,
-    lazy = false,
-    ---@type snacks.Config
+    "saghen/blink.cmp",
+    --- 对没有import的包进行补全
+    event = "VeryLazy",
+    dependencies = {
+      { "samiulsami/cmp-go-deep", dependencies = { "kkharji/sqlite.lua" } },
+      { "saghen/blink.compat" },
+    },
     opts = {
-      bigfile = { enabled = true },
-      dashboard = { enabled = true },
-      explorer = { enabled = true },
-      indent = { enabled = true },
-      input = { enabled = true },
-      notifier = {
-        enabled = true,
-        timeout = 3000,
-      },
-      picker = { enabled = true },
-      quickfile = { enabled = true },
-      scope = { enabled = true },
-      scroll = { enabled = true },
-      statuscolumn = { enabled = true },
-      words = { enabled = true },
-      styles = {
-        notification = {
-          -- wo = { wrap = true } -- Wrap notifications
+      sources = {
+        default = {
+          "go_deep",
+        },
+        providers = {
+          go_deep = {
+            name = "go_deep",
+            module = "blink.compat.source",
+            min_keyword_length = 3,
+            max_items = 5,
+            ---@module "cmp_go_deep"
+            ---@type cmp_go_deep.Options
+            opts = {
+              -- See below for configuration options
+            },
+          },
         },
       },
     },
+  },
+  {
+    "fang2hou/go-impl.nvim",
+    --- 对所在结构体给出某个 interface 的空实现，比如json编解码
+    event = "VeryLazy",
+    cmd = { "GoImplOpen" },
+    ft = "go",
+    dependencies = {
+      "MunifTanjim/nui.nvim",
+      "nvim-lua/plenary.nvim",
+      "ibhagwan/fzf-lua",
+    },
+    opts = {},
     keys = {
-      -- Top Pickers & Explorer
       {
-        "<leader><space>",
+        "<cmd>GoImpl",
         function()
-          Snacks.picker.smart()
+          require("go-impl").open()
         end,
-        desc = "Smart Find Files",
-      },
-      {
-        "<leader>,",
-        function()
-          Snacks.picker.buffers()
-        end,
-        desc = "Buffers",
-      },
-      {
-        "<leader>/",
-        function()
-          Snacks.picker.grep()
-        end,
-        desc = "Grep",
-      },
-      {
-        "<leader>:",
-        function()
-          Snacks.picker.command_history()
-        end,
-        desc = "Command History",
-      },
-      {
-        "<leader>n",
-        function()
-          Snacks.picker.notifications()
-        end,
-        desc = "Notification History",
-      },
-      {
-        "<leader>e",
-        function()
-          Snacks.explorer()
-        end,
-        desc = "File Explorer",
-      },
-      -- find
-      {
-        "<leader>fb",
-        function()
-          Snacks.picker.buffers()
-        end,
-        desc = "Buffers",
-      },
-      {
-        "<leader>fc",
-        function()
-          Snacks.picker.files({ cwd = vim.fn.stdpath("config") })
-        end,
-        desc = "Find Config File",
-      },
-      {
-        "<leader>ff",
-        function()
-          Snacks.picker.files()
-        end,
-        desc = "Find Files",
-      },
-      {
-        "<leader>fg",
-        function()
-          Snacks.picker.git_files()
-        end,
-        desc = "Find Git Files",
-      },
-      {
-        "<leader>fp",
-        function()
-          Snacks.picker.projects()
-        end,
-        desc = "Projects",
-      },
-      {
-        "<leader>fr",
-        function()
-          Snacks.picker.recent()
-        end,
-        desc = "Recent",
-      },
-      -- git
-      {
-        "<leader>gb",
-        function()
-          Snacks.picker.git_branches()
-        end,
-        desc = "Git Branches",
-      },
-      {
-        "<leader>gl",
-        function()
-          Snacks.picker.git_log()
-        end,
-        desc = "Git Log",
-      },
-      {
-        "<leader>gL",
-        function()
-          Snacks.picker.git_log_line()
-        end,
-        desc = "Git Log Line",
-      },
-      {
-        "<leader>gs",
-        function()
-          Snacks.picker.git_status()
-        end,
-        desc = "Git Status",
-      },
-      {
-        "<leader>gS",
-        function()
-          Snacks.picker.git_stash()
-        end,
-        desc = "Git Stash",
-      },
-      {
-        "<leader>gd",
-        function()
-          Snacks.picker.git_diff()
-        end,
-        desc = "Git Diff (Hunks)",
-      },
-      {
-        "<leader>gf",
-        function()
-          Snacks.picker.git_log_file()
-        end,
-        desc = "Git Log File",
-      },
-      -- Grep
-      {
-        "<leader>sb",
-        function()
-          Snacks.picker.lines()
-        end,
-        desc = "Buffer Lines",
-      },
-      {
-        "<leader>sB",
-        function()
-          Snacks.picker.grep_buffers()
-        end,
-        desc = "Grep Open Buffers",
-      },
-      {
-        "<leader>sg",
-        function()
-          Snacks.picker.grep()
-        end,
-        desc = "Grep",
-      },
-      {
-        "<leader>sw",
-        function()
-          Snacks.picker.grep_word()
-        end,
-        desc = "Visual selection or word",
-        mode = { "n", "x" },
-      },
-      -- search
-      {
-        '<leader>s"',
-        function()
-          Snacks.picker.registers()
-        end,
-        desc = "Registers",
-      },
-      {
-        "<leader>s/",
-        function()
-          Snacks.picker.search_history()
-        end,
-        desc = "Search History",
-      },
-      {
-        "<leader>sa",
-        function()
-          Snacks.picker.autocmds()
-        end,
-        desc = "Autocmds",
-      },
-      {
-        "<leader>sb",
-        function()
-          Snacks.picker.lines()
-        end,
-        desc = "Buffer Lines",
-      },
-      {
-        "<leader>sc",
-        function()
-          Snacks.picker.command_history()
-        end,
-        desc = "Command History",
-      },
-      {
-        "<leader>sC",
-        function()
-          Snacks.picker.commands()
-        end,
-        desc = "Commands",
-      },
-      {
-        "<leader>sd",
-        function()
-          Snacks.picker.diagnostics()
-        end,
-        desc = "Diagnostics",
-      },
-      {
-        "<leader>sD",
-        function()
-          Snacks.picker.diagnostics_buffer()
-        end,
-        desc = "Buffer Diagnostics",
-      },
-      {
-        "<leader>sh",
-        function()
-          Snacks.picker.help()
-        end,
-        desc = "Help Pages",
-      },
-      {
-        "<leader>sH",
-        function()
-          Snacks.picker.highlights()
-        end,
-        desc = "Highlights",
-      },
-      {
-        "<leader>si",
-        function()
-          Snacks.picker.icons()
-        end,
-        desc = "Icons",
-      },
-      {
-        "<leader>sj",
-        function()
-          Snacks.picker.jumps()
-        end,
-        desc = "Jumps",
-      },
-      {
-        "<leader>sk",
-        function()
-          Snacks.picker.keymaps()
-        end,
-        desc = "Keymaps",
-      },
-      {
-        "<leader>sl",
-        function()
-          Snacks.picker.loclist()
-        end,
-        desc = "Location List",
-      },
-      {
-        "<leader>sm",
-        function()
-          Snacks.picker.marks()
-        end,
-        desc = "Marks",
-      },
-      {
-        "<leader>sM",
-        function()
-          Snacks.picker.man()
-        end,
-        desc = "Man Pages",
-      },
-      {
-        "<leader>sp",
-        function()
-          Snacks.picker.lazy()
-        end,
-        desc = "Search for Plugin Spec",
-      },
-      {
-        "<leader>sq",
-        function()
-          Snacks.picker.qflist()
-        end,
-        desc = "Quickfix List",
-      },
-      {
-        "<leader>sR",
-        function()
-          Snacks.picker.resume()
-        end,
-        desc = "Resume",
-      },
-      {
-        "<leader>su",
-        function()
-          Snacks.picker.undo()
-        end,
-        desc = "Undo History",
-      },
-      {
-        "<leader>uC",
-        function()
-          Snacks.picker.colorschemes()
-        end,
-        desc = "Colorschemes",
-      },
-      -- LSP
-      {
-        "gd",
-        function()
-          Snacks.picker.lsp_definitions()
-        end,
-        desc = "Goto Definition",
-      },
-      {
-        "gD",
-        function()
-          Snacks.picker.lsp_declarations()
-        end,
-        desc = "Goto Declaration",
-      },
-      {
-        "gr",
-        function()
-          Snacks.picker.lsp_references()
-        end,
-        nowait = true,
-        desc = "References",
-      },
-      {
-        "gI",
-        function()
-          Snacks.picker.lsp_implementations()
-        end,
-        desc = "Goto Implementation",
-      },
-      {
-        "gy",
-        function()
-          Snacks.picker.lsp_type_definitions()
-        end,
-        desc = "Goto T[y]pe Definition",
-      },
-      {
-        "<leader>ss",
-        function()
-          Snacks.picker.lsp_symbols()
-        end,
-        desc = "LSP Symbols",
-      },
-      {
-        "<leader>sS",
-        function()
-          Snacks.picker.lsp_workspace_symbols()
-        end,
-        desc = "LSP Workspace Symbols",
-      },
-      -- Other
-      {
-        "<leader>z",
-        function()
-          Snacks.zen()
-        end,
-        desc = "Toggle Zen Mode",
-      },
-      {
-        "<leader>Z",
-        function()
-          Snacks.zen.zoom()
-        end,
-        desc = "Toggle Zoom",
-      },
-      {
-        "<leader>.",
-        function()
-          Snacks.scratch()
-        end,
-        desc = "Toggle Scratch Buffer",
-      },
-      {
-        "<leader>S",
-        function()
-          Snacks.scratch.select()
-        end,
-        desc = "Select Scratch Buffer",
-      },
-      {
-        "<leader>n",
-        function()
-          Snacks.notifier.show_history()
-        end,
-        desc = "Notification History",
-      },
-      {
-        "<leader>bd",
-        function()
-          Snacks.bufdelete()
-        end,
-        desc = "Delete Buffer",
-      },
-      {
-        "<leader>cR",
-        function()
-          Snacks.rename.rename_file()
-        end,
-        desc = "Rename File",
-      },
-      {
-        "<leader>gB",
-        function()
-          Snacks.gitbrowse()
-        end,
-        desc = "Git Browse",
-        mode = { "n", "v" },
-      },
-      {
-        "<leader>gg",
-        function()
-          Snacks.lazygit()
-        end,
-        desc = "Lazygit",
-      },
-      {
-        "<leader>un",
-        function()
-          Snacks.notifier.hide()
-        end,
-        desc = "Dismiss All Notifications",
-      },
-      {
-        "<c-/>",
-        function()
-          Snacks.terminal()
-        end,
-        desc = "Toggle Terminal",
-      },
-      {
-        "<c-_>",
-        function()
-          Snacks.terminal()
-        end,
-        desc = "which_key_ignore",
-      },
-      {
-        "]]",
-        function()
-          Snacks.words.jump(vim.v.count1)
-        end,
-        desc = "Next Reference",
-        mode = { "n", "t" },
-      },
-      {
-        "[[",
-        function()
-          Snacks.words.jump(-vim.v.count1)
-        end,
-        desc = "Prev Reference",
-        mode = { "n", "t" },
-      },
-      {
-        "<leader>N",
-        desc = "Neovim News",
-        function()
-          Snacks.win({
-            file = vim.api.nvim_get_runtime_file("doc/news.txt", false)[1],
-            width = 0.6,
-            height = 0.6,
-            wo = {
-              spell = false,
-              wrap = false,
-              signcolumn = "yes",
-              statuscolumn = " ",
-              conceallevel = 3,
-            },
-          })
-        end,
+        mode = { "n" },
+        desc = "Go Impl",
       },
     },
-    init = function()
-      vim.api.nvim_create_autocmd("User", {
-        pattern = "VeryLazy",
-        callback = function()
-          -- Setup some globals for debugging (lazy-loaded)
-          _G.dd = function(...)
-            Snacks.debug.inspect(...)
-          end
-          _G.bt = function()
-            Snacks.debug.backtrace()
-          end
-          vim.print = _G.dd -- Override print to use snacks for `:=` command
+  },
+  {
+    "zgs225/gomodifytags.nvim",
+    --- 对struct中可导出字段添加tag
+    event = "VeryLazy",
+    cmd = { "GoAddTags", "GoRemoveTags", "GoInstallModifyTagsBin" },
+    dependencies = {
+      "nvim-treesitter/nvim-treesitter",
+    },
+    build = "go install github.com/fatih/gomodifytags@latest",
+  },
+  {
+    "fredrikaverpil/godoc.nvim",
+    --- 查找或显示 go doc
+    event = "VeryLazy",
+    version = "*",
+    dependencies = {
+      -- { "nvim-telescope/telescope.nvim" }, -- optional
+      { "folke/snacks.nvim" }, -- optional
+      -- { "echasnovski/mini.pick" }, -- optional
+      { "ibhagwan/fzf-lua" }, -- optional
+      {
+        "nvim-treesitter/nvim-treesitter",
+        opts = {
+          ensure_installed = { "go" },
+        },
+      },
+    },
 
-          -- Create some toggle mappings
-          Snacks.toggle.option("spell", { name = "Spelling" }):map("<leader>us")
-          Snacks.toggle.option("wrap", { name = "Wrap" }):map("<leader>uw")
-          Snacks.toggle.option("relativenumber", { name = "Relative Number" }):map("<leader>uL")
-          Snacks.toggle.diagnostics():map("<leader>ud")
-          Snacks.toggle.line_number():map("<leader>ul")
-          Snacks.toggle
-            .option("conceallevel", { off = 0, on = vim.o.conceallevel > 0 and vim.o.conceallevel or 2 })
-            :map("<leader>uc")
-          Snacks.toggle.treesitter():map("<leader>uT")
-          Snacks.toggle.option("background", { off = "light", on = "dark", name = "Dark Background" }):map("<leader>ub")
-          Snacks.toggle.inlay_hints():map("<leader>uh")
-          Snacks.toggle.indent():map("<leader>ug")
-          Snacks.toggle.dim():map("<leader>uD")
-        end,
-      })
-    end,
+    build = "go install github.com/lotusirous/gostdsym/stdsym@latest",
+    cmd = { "GoDoc" }, -- optional
+    opts = {}, -- see further down below for configuration
   },
   {
-    "airblade/vim-rooter",
-    opts = {},
-    -- event = "VeryLazy",
-    --- 设置vim的工作目录，便于fzf搜索
-    config = function(_, opts)
-      vim.cmd([[
-      let g:rooter_patterns = ['.git', 'Makefile']
-      let g:rooter_silent_chdir = 1
-      ]])
-    end,
-  },
-  {
-    "wlemuel/vim-tldr",
-    --- 简明的文档搜索，比 Man 更容易懂，但可能不全面
-    --- 终端可以安装 tldr，对于vim，只需要安装本插件就行
-    --- Run :Tldr [command] to find the tldr of command.
-    --- Run :TldrUpdateDocs to get or update tldr docs.
-    --- 如果查不到，可以先尝试用 Man 命令，如果不好理解，可以用 :TldrUpdateDocs 更新，
-    --- 再用 Tldr 命令
-    --- Tldr 命令不好记，用 Ask 作为别名
-    opt = {},
+    "maxandron/goplements.nvim",
+    --- 在 interface 名称后显示其所有实现者
     event = "VeryLazy",
-    config = function(_, opts)
-      vim.cmd("command -nargs=* Ask Tldr <args>")
+    ft = "go",
+    opts = {
+      -- your configuration comes here
+      -- or leave it empty to use the default settings
+      -- refer to the configuration section below
+    },
+  },
+  {
+    "crusj/hierarchy-tree-go.nvim",
+    --- 展示调用树，在查问题或阅读代码时很管用
+    event = "VeryLazy",
+    dependencies = {
+      "neovim/nvim-lspconfig",
+    },
+    opts = {
+      icon = {
+        fold = "", -- fold icon
+        unfold = "", -- unfold icon
+        func = "₣", -- symbol
+        last = "☉", -- last level icon
+      },
+      hl = {
+        -- current_module = "guifg=Green", -- highlight cwd module line
+        -- others_module = "guifg=Black", -- highlight others module line
+        -- cursorline = "guibg=Gray guifg=White", -- hl  window cursorline
+      },
+      keymap = {
+        --global keymap
+        incoming = "<localleader>fi", -- call incoming under cursorword
+        outgoing = "<localleader>fo", -- call outgoing under cursorword
+        open = "<localleader>ho", -- open hierarchy win
+        close = "<localleader>hc", -- close hierarchy win
+        -- focus: if hierarchy win is valid but is not current win, set to current win
+        -- focus: if hierarchy win is valid and is current win, close
+        -- focus  if hierarchy win not existing,open and focus
+        focus = "<localleader>fu",
+
+        -- bufkeymap
+        expand = "o", -- expand or collapse hierarchy
+        jump = "<CR>", -- jump
+        move = "<space><space>", -- switch the hierarchy window position, must be current win
+      },
+    },
+  },
+  {
+    "code-winder/go-fillstruct-vim",
+    event = "VeryLazy",
+    cmd = { "GoFillStruct" },
+  },
+  {
+    "code-winder/go.nvim",
+    --- go 工具集，很多以 Go 打头的命令
+    dependencies = { -- optional packages
+      "ray-x/guihua.lua",
+      "neovim/nvim-lspconfig",
+      "nvim-treesitter/nvim-treesitter",
+      "mfussenegger/nvim-dap",
+      "nvim-neotest/nvim-nio",
+      "rcarriga/nvim-dap-ui",
+      "leoluz/nvim-dap-go",
+    },
+    opts = {
+      -- lsp_keymaps = false,
+      -- other options
+    },
+    config = function(lp, opts)
+      require("go").setup(opts)
+      --- 注释掉下面的语句，为了防止 import 两次（与lazyvim自带的冲突了）
+      -- local format_sync_grp = vim.api.nvim_create_augroup("GoFormat", {})
+      -- vim.api.nvim_create_autocmd("BufWritePre", {
+      --   pattern = "*.go",
+      --   callback = function()
+      --     require("go.format").goimports()
+      --   end,
+      --   group = format_sync_grp,
+      -- })
     end,
-  },
-  {
-    "pseewald/vim-anyfold",
-    --- 代码折叠
-    --- za 折叠或展开一个fold
-    --- zM 折叠所有
-    --- zR 展开所有
-    opt = {},
+    -- event = { "CmdlineEnter" },
     event = "VeryLazy",
-    config = function(_, opts)
-      vim.cmd([[
-      set foldmethod=manual
-      autocmd Filetype * AnyFoldActivate
-      set foldlevel=999  " 0-close all folds; 1-close one fold
-      ]])
-    end,
-  },
-  {
-    "tpope/vim-commentary",
-    --- Comment stuff out.
-    --- Use gcc to comment out a line (takes a count),
-    --- gc to comment out the target of a motion (for example, gcap to comment out a paragraph),
-    --- gc in visual mode to comment out the selection,
-    --- and gc in operator pending mode to target a comment.
-    --- You can also use it as a command, either with a range like :7,17Commentary,
-    --- or as part of a :global invocation like with :g/TODO/Commentary. That's it.
-    opt = {},
-    event = "VeryLazy",
-  },
-  {
-    "SirVer/ultisnips",
-    opt = {},
-    event = "VeryLazy",
-  },
-  {
-    "honza/vim-snippets",
-    dependencies = { "SirVer/ultisnips" },
-    opt = {},
-    event = "VeryLazy",
-    config = function(_, opts)
-      vim.cmd([[
-      let g:UltiSnipsExpandTrigger = "<tab>"
-      let g:UltiSnipsJumpForwardTrigger = "<tab>"
-      let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
-      ]])
-    end,
-  },
-  {
-    "nvim-tree/nvim-web-devicons",
-    opt = {},
-    event = "VeryLazy",
-  },
-  {
-    "sindrets/diffview.nvim",
-    --- 类似 git log -p
-    --- The current branch: :DiffviewFileHistory
-    --- 只取部分提交实例：:DiffviewFileHistory --range=分支1..分支2
-    --- The current file: :DiffviewFileHistory %
-    --- 类似 git diff
-    --- :DiffviewOpen diff参数(如分支名)
-    --- 其他
-    --- :DiffviewClose: Close the current diffview. You can also use :tabclose.
-    --- :DiffviewToggleFiles: Toggle the file panel.
-    --- :DiffviewFocusFiles: Bring focus to the file panel.
-    --- :DiffviewRefresh: Update stats and entries in the file list of the current Diffview.
-    dependencies = { "nvim-tree/nvim-web-devicons" },
-    opt = {},
-    event = "VeryLazy",
-    config = function(_, opts)
-      vim.cmd([[
-      command -nargs=* GitLog DiffviewFileHistory <q-args>
-      command -nargs=* GitDiff DiffviewOpen <q-args>
-      command GitClose DiffviewClose
-      ]])
-    end,
-    cmd = { "GitDiff", "GitLog", "GitClose" },
-  },
-  {
-    "arp242/switchy.vim",
-    --- :A will open the current file's tests or the current test's implementation based on what is currently opened.
-    --- :AS will act the same as :A but will move the current file to a new buffer in a split.
-    --- :AV will act the same as :AS but with a vertical split.
-    opt = {},
-    -- event = "VeryLazy",
-    config = function(_, opts)
-      vim.cmd([[
-      command! A call switchy#switch('vsp', 'wincmd p | :e')
-      ]])
-    end,
-    cmd = { "A" },
+    ft = { "go", "gomod" },
+    build = ':lua require("go.install").update_all_sync()', -- if you need to install/update all binaries
   },
 }
