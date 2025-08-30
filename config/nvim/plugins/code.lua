@@ -602,6 +602,10 @@ return {
   },
   {
     "pseewald/vim-anyfold",
+    --- 代码折叠
+    --- za 折叠或展开一个fold
+    --- zM 折叠所有
+    --- zR 展开所有
     opt = {},
     event = "VeryLazy",
     config = function(_, opts)
@@ -670,6 +674,7 @@ return {
       command GitClose DiffviewClose
       ]])
     end,
+    cmd = { "GitDiff", "GitLog", "GitClose" },
   },
   {
     "arp242/switchy.vim",
@@ -683,5 +688,6 @@ return {
       command! A call switchy#switch('vsp', 'wincmd p | :e')
       ]])
     end,
+    cmd = { "A" },
   },
 }
