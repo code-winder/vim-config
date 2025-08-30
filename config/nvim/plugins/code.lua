@@ -677,7 +677,7 @@ return {
     --- :AS will act the same as :A but will move the current file to a new buffer in a split.
     --- :AV will act the same as :AS but with a vertical split.
     opt = {},
-    event = "VeryLazy",
+    -- event = "VeryLazy",
     config = function(_, opts)
       vim.cmd([[
       command! A call switchy#switch('vsp', 'wincmd p | :e')
