@@ -155,12 +155,13 @@ return {
         -- bufkeymap
         expand = "o", -- expand or collapse hierarchy
         jump = "<CR>", -- jump
-        move = "<space><space>", -- switch the hierarchy window position, must be current win
+        move = "<localleader>hh", -- switch the hierarchy window position, must be current win
       },
     },
   },
   {
     "code-winder/go-fillstruct-vim",
+    --- 填充 go 的 struct 字段默认值
     event = "VeryLazy",
     cmd = { "GoFillStruct" },
   },
