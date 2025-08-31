@@ -30,6 +30,7 @@ return {
   {
     "saghen/blink.cmp",
     --- 对没有import的包进行补全
+    event = "VeryLazy",
     dependencies = {
       { "samiulsami/cmp-go-deep", dependencies = { "kkharji/sqlite.lua" } },
       { "saghen/blink.compat" },
@@ -58,6 +59,7 @@ return {
   {
     "fang2hou/go-impl.nvim",
     --- 对所在结构体给出某个 interface 的空实现，比如json编解码
+    event = "VeryLazy",
     cmd = { "GoImplOpen" },
     ft = "go",
     dependencies = {
@@ -80,6 +82,7 @@ return {
   {
     "zgs225/gomodifytags.nvim",
     --- 对struct中可导出字段添加tag
+    event = "VeryLazy",
     cmd = { "GoAddTags", "GoRemoveTags", "GoInstallModifyTagsBin" },
     dependencies = {
       "nvim-treesitter/nvim-treesitter",
@@ -89,6 +92,7 @@ return {
   {
     "fredrikaverpil/godoc.nvim",
     --- 查找或显示 go doc
+    event = "VeryLazy",
     version = "*",
     dependencies = {
       -- { "nvim-telescope/telescope.nvim" }, -- optional
@@ -110,6 +114,7 @@ return {
   {
     "maxandron/goplements.nvim",
     --- 在 interface 名称后显示其所有实现者
+    event = "VeryLazy",
     ft = "go",
     opts = {
       -- your configuration comes here
@@ -120,6 +125,7 @@ return {
   {
     "crusj/hierarchy-tree-go.nvim",
     --- 展示调用树，在查问题或阅读代码时很管用
+    event = "VeryLazy",
     dependencies = {
       "neovim/nvim-lspconfig",
     },
@@ -131,9 +137,9 @@ return {
         last = "☉", -- last level icon
       },
       hl = {
-        -- current_module = "guifg=Green", -- highlight cwd module line
-        -- others_module = "guifg=Black", -- highlight others module line
-        -- cursorline = "guibg=Gray guifg=White", -- hl  window cursorline
+        current_module = "guifg=Green", -- highlight cwd module line
+        others_module = "guifg=Blue", -- highlight others module line
+        cursorline = "guibg=Gray guifg=White", -- hl  window cursorline
       },
       keymap = {
         --global keymap
@@ -155,6 +161,7 @@ return {
   },
   {
     "code-winder/go-fillstruct-vim",
+    event = "VeryLazy",
     cmd = { "GoFillStruct" },
   },
   {
@@ -165,13 +172,18 @@ return {
       "neovim/nvim-lspconfig",
       "nvim-treesitter/nvim-treesitter",
       "mfussenegger/nvim-dap",
-      "nvim-neotest/nvim-nio",
       "rcarriga/nvim-dap-ui",
+      "nvim-neotest/nvim-nio",
       "leoluz/nvim-dap-go",
+      "theHamsta/nvim-dap-virtual-text",
     },
     opts = {
       -- lsp_keymaps = false,
       -- other options
+      lsp_inlay_hints = {
+        enable = false,
+      },
+      luasnip = false,
     },
     config = function(lp, opts)
       require("go").setup(opts)
