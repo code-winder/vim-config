@@ -1,6 +1,7 @@
 return {
   {
     "Mofiqul/vscode.nvim",
+    --- item2 终端主题设置为 solarized-dark
     config = function()
       local c = require("vscode.colors").get_colors()
       require("vscode").setup({
