@@ -15,6 +15,9 @@ plugins=(
   fzf-tab # fzf风格的tab补全，各种命令及其参数的补充，比如 git，对于 cd 或者打开文件之类的不建议用，因为更高效的有fzf提供的<c-t>，比如 cd <c-t>，又比如 vi $(fzf)
 )
 
+# 设置 zsh 建议文字的颜色，特别是与iterm2等终端颜色主题混淆看不清时
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=blue'
+
 # 常用别名
 alias flog='git log --graph --oneline --all --decorate'
 alias ll='ls -lha'
