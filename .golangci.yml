@@ -1,0 +1,268 @@
+---
+# 放在 .git 同级目录
+# golangci-lint configuration file made by @ccoVeille
+# Source: https://github.com/ccoVeille/golangci-lint-config-examples/
+# Author: @ccoVeille
+# License: MIT
+# Variant: 90-daredevil
+# Version: v2.0.0
+#
+version: "2"
+
+formatters:
+  enable:
+    # format the code
+    - gofmt
+    # format the block of imports
+    - gci
+    - gofumpt
+
+  settings:
+    # format the code with Go standard library
+    gofmt:
+      # simplify the code
+      # https://pkg.go.dev/cmd/gofmt#hdr-The_simplify_command
+      simplify: true
+      rewrite-rules:
+        # replace `interface{}` with `any` in the code on format
+        - pattern: 'interface{}'
+          replacement: 'any'
+
+    # make sure imports are always in a deterministic order
+    # https://github.com/daixiang0/gci/
+    gci:  # define the section orders for imports
+      sections:
+        # Standard section: captures all standard packages.
+        - standard
+        # Default section: catchall that is not standard or custom
+        - default
+        # linters that related to local tool, so they should be separated
+        - localmodule
+
+run:
+  # Timeout for analysis, e.g. 30s, 5m.
+  # Default: 1m
+  timeout: 5m
+  tests: false
+  go: '1.24'
+
+issues:
+  # Maximum issues count per one linter.
+  # Set to 0 to disable.
+  # Default: 50
+  max-issues-per-linter: 0
+  # Maximum count of issues with the same text.
+  # Set to 0 to disable.
+  # Default: 3
+  max-same-issues: 0
+  # Make issues output unique by line.
+  # Default: true
+  uniq-by-line: true
+
+linters:
+  # some linters are enabled by default
+  # https://golangci-lint.run/usage/linters/
+  #
+  # enable some extra linters
+  default: all
+
+  disable:
+    - noinlineerr
+    - mnd
+    - tagliatelle
+    - wsl
+    - nonamedreturns
+
+  settings:
+    lll:
+      line-length: 140
+    cyclop:
+      # The maximal code complexity to report.
+      # Default: 10
+      max-complexity: 20
+      # The maximal average package complexity.
+      # If it's higher than 0.0 (float) the check is enabled.
+      # Default: 0.0
+      package-average: 10
+
+    gocognit:
+      min-complexite: 10
+
+    gochecknoglobals:
+      check-position: false
+      max-line-length: 140
+      exclude:
+
+    depguard:
+      rules:
+        main:
+          list-mode: lax
+          allow:
+            - $gostd
+            - github.com/*
+            - code.bydev.io/*
+
+    wsl_v5:
+      allow-first-in-block: true
+      allow-whole-block: false
+      branch-max-lines: 2
+
+    usestdlibvars:
+      # Suggest the use of http.MethodXX.
+      # Default: true
+      http-method: true
+      # Suggest the use of http.StatusXX.
+      # Default: true
+      http-status-code: true
+      # Suggest the use of time.Weekday.String().
+      # Default: true
+      time-weekday: true
+      # Suggest the use of constants available in time package
+      # Default: false
+      time-layout: true
+
+    staticcheck:
+      # SAxxxx checks in https://staticcheck.io/docs/configuration/options/#checks
+      checks:
+        - all
+        - -ST1000
+        # - -SA9001
+        # - -ST1013
+
+    nolintlint:
+      # Enable to require an explanation of nonzero length
+      # after each nolint directive.
+      # Default: false
+      require-explanation: true
+      # Enable to require nolint directives to mention the specific
+      # linter being suppressed.
+      # Default: false
+      require-specific: true
+
+    govet:
+      enable-all: true
+      disable:
+        - fieldalignment
+
+    gocritic:
+      enable-all: true
+
+    revive:
+      enable-all-rules: true
+      rules:
+        # we must provide configuration for linter that requires them
+        # enable-all-rules is OK, but many revive linters expect configuration
+        # and cannot work without them
+
+        # https://github.com/mgechev/revive/blob/master/RULES_DESCRIPTIONS.md#context-as-argument
+        - name: add-constant
+          severity: warning
+          disabled: true
+          exclude: [""]
+          arguments:
+            - max-lit-count: "3"
+              allow-strs: '""'
+              allow-ints: "0,1,2"
+              allow-floats: "0.0,0.,1.0,1.,2.0,2."
+
+        - name: struct-tag
+          severity: warning
+          disabled: true
+          # exclude: [""]
+          # arguments:
+          #   - "json,inline"
+          #   - "bson,outline,gnu"
+
+        - name: cyclomatic
+          severity: warning
+          disabled: false
+          exclude: [""]
+          arguments: [20]
+
+        - name: cognitive-complexity
+          severity: warning
+          disabled: false
+          exclude: [""]
+          arguments: [20]
+
+
+        - name: line-length-limit
+          severity: warning
+          disabled: false
+          exclude: [""]
+          arguments: [140]
+
+        - name: file-length-limit
+          severity: warning
+          disabled: true
+          exclude: [""]
+          arguments:
+            - max: 100
+              skip-comments: true
+              skip-blank-lines: true
+
+        - name: package-comments
+          severity: warning
+          disabled: true
+          exclude: [""]
+
+        - name: context-as-argument
+          arguments:
+            - allowTypesBefore: "*testing.T"
+
+        # https://github.com/mgechev/revive/blob/master/RULES_DESCRIPTIONS.md#exported
+        - name: exported
+          severity: warning
+          disabled: true
+          # exclude: [""]
+          # arguments:
+          #   - "check-private-receivers"
+          #   - "disable-stuttering-check"
+          #   - "say-repetitive-instead-of-stutters"
+          #   - "check-public-interface"
+          #   - "disable-checks-on-constants"
+          #   - "disable-checks-on-functions"
+          #   - "disable-checks-on-methods"
+          #   - "disable-checks-on-types"
+          #   - "disable-checks-on-variables"
+
+    dupword:
+      # Keywords used to ignore detection.
+      # Default: []
+      ignore: []
+      #  - "blah" # this will accept "blah blah …" as a valid duplicate word
+
+    misspell:
+      # Correct spellings using locale preferences for US or UK.
+      # Setting locale to US will correct the British spelling of 'colour' to 'color'.
+      # Default ("") is to use a neutral variety of English.
+      locale: US
+
+      # List of words to ignore
+      # among the one defined in https://github.com/golangci/misspell/blob/master/words.go
+      ignore-rules: []
+      #  - valor
+      #  - and
+
+      # Extra word corrections.
+      extra-words: []
+      #  - typo: "whattever"
+      #    correction: "whatever"
+
+output:
+  # Order to use when sorting results.
+  # Possible values: `file`, `linter`, and `severity`.
+  #
+  # If the severity values are inside the following list, they are ordered in this order:
+  #   1. error
+  #   2. warning
+  #   3. high
+  #   4. medium
+  #   5. low
+  # Either they are sorted alphabetically.
+  #
+  # Default: ["file"]
+  sort-order:
+    - linter
+    - severity
+    - file # filepath, line, and column.
