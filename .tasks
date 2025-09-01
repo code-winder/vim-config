@@ -1,3 +1,4 @@
+# 放在 .git 同级目录
 # vim: set fenc=utf-8 ft=taskini:
 # see: https://github.com/skywind3000/asynctasks.vim/wiki/Task-Config
 
