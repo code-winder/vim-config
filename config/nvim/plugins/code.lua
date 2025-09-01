@@ -1251,5 +1251,7 @@ return {
   {
     "wellle/context.vim",
     --- 向上移动时，显示长函数的函数头
+    --- 用途不大，对于文件比较大的，很卡顿
+    enabled = false,
   },
 }
