@@ -20,12 +20,12 @@
 + ] 或 [ 打头，进行区块移动，比如 函数间移动、结构体间、函数参数间
   - [q Previous Quickfix
   - ]q Next Quickfix
-++ ]d Next Diagnostic
-++ [d Prev Diagnostic
-++ ]e Next Error
-++ [e Prev Error
-++ ]w Next Warning
-++ [w Prev Warning
+  - ]d Next Diagnostic
+  - [d Prev Diagnostic
+  - ]e Next Error
+  - [e Prev Error
+  - ]w Next Warning
+  - [w Prev Warning
 
 + leader-ul Toggle Line Numbers
 + leader-uL Toggle Relative Number
@@ -36,34 +36,34 @@
 ## code 有关
 
 + leader-g 打头，表示与git相关的一些操作，可以先按，右下角会有提示
-++ leader-gb Git Blame Line
-++ leader-gs Git Status
-++ leader-gd Git Diff (Hunks)
-++ leader-gb Git branch
-++ leader-gl Git Log
-++ leader-gL Git Log Line（当前文件当前行的变更历史）
-++ leader-gf Git Log file
-++ leader-gg lazygit 及其操作
-  
+  - leader-gb Git Blame Line
+  - leader-gs Git Status
+  - leader-gd Git Diff (Hunks)
+  - leader-gb Git branch
+  - leader-gl Git Log
+  - leader-gL Git Log Line（当前文件当前行的变更历史）
+  - leader-gf Git Log file
+  - leader-gg lazygit 及其操作
+
++ ctrl-/ 打开或关闭底部终端  
 + leader-u 打头，表示与ui相关的一些显示操作，可以先按，右下角会有提示
-++ leader-us Toggle Spelling
-++ leader-ud Toggle Diagnostics
+  - leader-us Toggle Spelling
+  - leader-ud Toggle Diagnostics
 
 + g 打头，与代码跳转和移动相关的操作
-++ gd Goto Definition
-++ gr References
-++ gI Goto Implementation
-++ gy Goto T[y]pe Definition
-++ gD Goto Declaration
-++ gK 或者 ctrl-k Signature Help
-++ K Hover
+  - gd Goto Definition
+  - gr References
+  - gI Goto Implementation
+  - gy Goto T[y]pe Definition
+  - gD Goto Declaration
+  - gK 或者 ctrl-k Signature Help
+  - K Hover
 
-+ ctrl-/ 打开或关闭底部终端
 + leader-c 打头，code 变更相关的操作
-++ leader-ca 或者 -cA Code Action
-++ leader-cr Rename 函数或变量名等
-++ leader-cR Rename File
-++ leader-cs 代码的大纲视图
+  - leader-ca 或者 -cA Code Action
+  - leader-cr Rename 函数或变量名等
+  - leader-cR Rename File
+  - leader-cs 代码的大纲视图
 
 ## 搜索
 
