@@ -55,7 +55,7 @@ vim 的一个很大优势在于其灵活快速的光标和屏幕移动，屏幕�
 
 ## 窗格间移动
 
-+ Ctrl + w + p：移动到前一个访问的窗口（在代码CR时非常好用）
++ Ctrl + w + p：移动到前一个访问的窗口（在代码CR时非常好用）（【注意】：此在lazyvim中不起作用）
 + Ctrl + w + w：这个命令会在所有窗口中循环移动
 + 配合插件 (christoomey/vim-tmux-navigator) 和tmux配置，可在vim和tmux内部或它们之间移动
   + `<ctrl-h>` => Left
