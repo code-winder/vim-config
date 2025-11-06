@@ -18,8 +18,8 @@
 + leader-xq Quickfix List
 
 + ] 或 [ 打头，进行区块移动，比如 函数间移动、结构体间、函数参数间
-++ [q Previous Quickfix
-++ ]q Next Quickfix
+  - [q Previous Quickfix
+  - ]q Next Quickfix
 ++ ]d Next Diagnostic
 ++ [d Prev Diagnostic
 ++ ]e Next Error
