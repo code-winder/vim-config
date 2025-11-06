@@ -56,29 +56,28 @@ return {
       },
     },
   },
-  {
-    "fang2hou/go-impl.nvim",
-    --- 对所在结构体给出某个 interface 的空实现，比如json编解码
-    event = "VeryLazy",
-    cmd = { "GoImplOpen" },
-    ft = "go",
-    dependencies = {
-      "MunifTanjim/nui.nvim",
-      "nvim-lua/plenary.nvim",
-      "ibhagwan/fzf-lua",
-    },
-    opts = {},
-    keys = {
-      {
-        "<cmd>GoImpl",
-        function()
-          require("go-impl").open()
-        end,
-        mode = { "n" },
-        desc = "Go Impl",
-      },
-    },
-  },
+  -- {
+  --   "fang2hou/go-impl.nvim",
+  --   ft = "go",
+  --   dependencies = {
+  --     "MunifTanjim/nui.nvim",
+  --     "nvim-lua/plenary.nvim",
+  --     "ibhagwan/fzf-lua",
+  --   },
+  --   opts = {},
+  --   event = "VeryLazy",
+  --   cmd = { "GoImplOpen" },
+  --   keys = {
+  --     {
+  --       "<cmd>GoImpl",
+  --       function()
+  --         require("go-impl").open()
+  --       end,
+  --       mode = { "n" },
+  --       desc = "Go Impl",
+  --     },
+  --   },
+  -- },
   {
     "zgs225/gomodifytags.nvim",
     --- 对struct中可导出字段添加tag
@@ -167,36 +166,25 @@ return {
   },
   {
     "code-winder/go.nvim",
-    --- go 工具集，很多以 Go 打头的命令
     dependencies = { -- optional packages
       "ray-x/guihua.lua",
       "neovim/nvim-lspconfig",
       "nvim-treesitter/nvim-treesitter",
-      "mfussenegger/nvim-dap",
-      "rcarriga/nvim-dap-ui",
-      "nvim-neotest/nvim-nio",
-      "leoluz/nvim-dap-go",
-      "theHamsta/nvim-dap-virtual-text",
     },
     opts = {
       -- lsp_keymaps = false,
       -- other options
-      lsp_inlay_hints = {
-        enable = false,
-      },
-      luasnip = false,
     },
     config = function(lp, opts)
       require("go").setup(opts)
-      --- 注释掉下面的语句，为了防止 import 两次（与lazyvim自带的冲突了）
-      -- local format_sync_grp = vim.api.nvim_create_augroup("GoFormat", {})
-      -- vim.api.nvim_create_autocmd("BufWritePre", {
-      --   pattern = "*.go",
-      --   callback = function()
-      --     require("go.format").goimports()
-      --   end,
-      --   group = format_sync_grp,
-      -- })
+      local format_sync_grp = vim.api.nvim_create_augroup("GoFormat", {})
+      vim.api.nvim_create_autocmd("BufWritePre", {
+        pattern = "*.go",
+        callback = function()
+          -- require("go.format").goimports()
+        end,
+        group = format_sync_grp,
+      })
     end,
     event = { "CmdlineEnter" },
     ft = { "go", "gomod" },
