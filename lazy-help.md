@@ -1,6 +1,6 @@
 # lazyVim 的快捷键
 
-## 滚动或buf跳转
+## 滚动或当前buf内跳转
 
 + ctrl-Up Increase Window Height
 + ctrl-Down Decrease Window Height
@@ -13,7 +13,7 @@
 + [B Move buffer prev
 + ]B Move buffer next
 + leader-bd Delete Buffer
-+ ctrl--s Save File
++ ctrl-s Save File
 + leader-xl Location List
 + leader-xq Quickfix List
 
@@ -27,8 +27,6 @@
   - ]w Next Warning
   - [w Prev Warning
 
-+ leader-ul Toggle Line Numbers
-+ leader-uL Toggle Relative Number
 + ctrl-B Scroll Backward
 + ctrl-f Scroll Forward
 + leader-z 或者 leader-Z Toggle Zen Mode（需要snacks额外配置）
@@ -45,10 +43,12 @@
   - leader-gf Git Log file
   - leader-gg lazygit 及其操作
 
-+ ctrl-/ 打开或关闭底部终端  
++ ctrl-/ 打开或关闭底部终端（或者 leader-ft）  
 + leader-u 打头，表示与ui相关的一些显示操作，可以先按，右下角会有提示
   - leader-us Toggle Spelling
   - leader-ud Toggle Diagnostics
+  - leader-ul Toggle Line Numbers
+  - leader-uL Toggle Relative Number
 
 + g 打头，与代码跳转和移动相关的操作
   - gd Goto Definition
@@ -67,39 +67,48 @@
 
 ## 搜索
 
-+ leader-sr Search and Replace
-+ leader<space Find Files (Root Dir)
-+ leader-fb Buffers
-+ leader-: Command History
-+ leader-/ Grep (Root Dir)
-+ leader-e Explorer Snacks (root dir)
-+ leader-fe Explorer Snacks (root dir)
-+ leader-ff Find Files (Root Dir)
-+ leader-fg Find Files (git-files)
-+ leader-fp Projects
-+ leader-fr Recent
-+ leader-s" 或者 " Registers
-+ leader-s/ Search History
-+ leader-sa Autocmds
-+ leader-sc Command History
-+ leader-sC Commands
-+ leader-sd Diagnostics
-+ leader-sD Buffer Diagnostics
-+ leader-sg Grep (Root Dir)
-+ leader-sh Help Pages
-+ leader-? Buffer Keymaps (which-key)
-+ leader-sM Man Pages
-+ leader-sH Highlights
-+ leader-sj Jumps
-+ leader-sk Keymaps
-+ leader-sm Marks
-+ leader-sw find current word
-+ leader-su Undotree
-+ leader-sp Search for Plugin Spec
-+ leader-sq Quickfix List
-+ leader-sl Location List
-+ leader-st Todo
-+ leader-xx Diagnostics (Trouble)
-+ leader-xX Buffer Diagnostics (Trouble)
++ leader-s 打头，表示查找内容操作（非文件名）
+  - leader-su Undotree
+  - leader-st Todo
+  - leader-s" 或者 " Registers
+  - leader-sj Jumps
+  - leader-sd Diagnostics
+  - leader-sD Buffer Diagnostics
+  - leader-s/ Search History
+  - leader-sg Grep (Root Dir)
+  - leader-/ Grep (Root Dir)
+  - leader-sw find current word
+  - leader-sr Search and Replace
+  - leader-sq Quickfix List
+  - leader-sl Location List
+  - leader-sc Command History
+  - leader-: Command History
+  - leader-sa Autocmds
+  - leader-sC Commands
+  - leader-sk Keymaps
+  - leader-? Buffer Keymaps (which-key)
+  - leader-sp Search for Plugin Spec
+  - leader-sH Highlights
+  - leader-sh Help Pages
+  - leader-sM Man Pages
+  - leader-sm Marks
+
++ leader-f 打头，表示查找文件名操作
+  - leader-fb Buffers 查找已打开的文件
+  - leader-fe Explorer Snacks (root dir)
+  - leader-e Explorer Snacks (root dir)
+  - leader-ff Find Files (Root Dir)
+  - leader-space Find Files (Root Dir)
+  - leader-fg Find Files (git-files)
+  - leader-fp Projects
+  - leader-fr Recent
+  - leader-fn 新建文件
+ 
++ leader-x 打头，错误提示
+  - leader-xx Diagnostics (Trouble)
+  - leader-xX Buffer Diagnostics (Trouble)
+  - leader-sd Diagnostics
+  - leader-sD Buffer Diagnostics
+  - leader-xT或-xt TODO list
+  - leader-st Todo
 + leader-p Open Yank History
-+ leader-cs Toggle Outline 大纲视图，可快速浏览文件
