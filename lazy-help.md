@@ -71,6 +71,7 @@
   - leader-su Undotree
   - leader-st Todo
   - leader-s" 或者 " Registers
+  - leader-p 打开拷贝面板历史（要在lazyExtra中安装yank）
   - leader-sj Jumps
   - leader-sd Diagnostics
   - leader-sD Buffer Diagnostics
@@ -111,4 +112,3 @@
   - leader-sD Buffer Diagnostics
   - leader-xT或-xt TODO list
   - leader-st Todo
-+ leader-p Open Yank History
