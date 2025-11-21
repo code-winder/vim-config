@@ -78,38 +78,38 @@ return {
   --     },
   --   },
   -- },
-  {
-    "zgs225/gomodifytags.nvim",
-    --- 对struct中可导出字段添加tag
-    event = "VeryLazy",
-    cmd = { "GoAddTags", "GoRemoveTags", "GoInstallModifyTagsBin" },
-    dependencies = {
-      "nvim-treesitter/nvim-treesitter",
-    },
-    build = "go install github.com/fatih/gomodifytags@latest",
-  },
-  {
-    "fredrikaverpil/godoc.nvim",
-    --- 查找或显示 go doc
-    event = "VeryLazy",
-    version = "*",
-    dependencies = {
-      -- { "nvim-telescope/telescope.nvim" }, -- optional
-      { "folke/snacks.nvim" }, -- optional
-      -- { "echasnovski/mini.pick" }, -- optional
-      { "ibhagwan/fzf-lua" }, -- optional
-      {
-        "nvim-treesitter/nvim-treesitter",
-        opts = {
-          ensure_installed = { "go" },
-        },
-      },
-    },
-
-    build = "go install github.com/lotusirous/gostdsym/stdsym@latest",
-    cmd = { "GoDoc" }, -- optional
-    opts = {}, -- see further down below for configuration
-  },
+  -- {
+  --   "zgs225/gomodifytags.nvim",
+  --   --- 对struct中可导出字段添加tag
+  --   event = "VeryLazy",
+  --   cmd = { "GoAddTags", "GoRemoveTags", "GoInstallModifyTagsBin" },
+  --   dependencies = {
+  --     "nvim-treesitter/nvim-treesitter",
+  --   },
+  --   build = "go install github.com/fatih/gomodifytags@latest",
+  -- },
+  -- {
+  --   "fredrikaverpil/godoc.nvim",
+  --   --- 查找或显示 go doc
+  --   event = "VeryLazy",
+  --   version = "*",
+  --   dependencies = {
+  --     -- { "nvim-telescope/telescope.nvim" }, -- optional
+  --     { "folke/snacks.nvim" }, -- optional
+  --     -- { "echasnovski/mini.pick" }, -- optional
+  --     { "ibhagwan/fzf-lua" }, -- optional
+  --     {
+  --       "nvim-treesitter/nvim-treesitter",
+  --       opts = {
+  --         ensure_installed = { "go" },
+  --       },
+  --     },
+  --   },
+  --
+  --   build = "go install github.com/lotusirous/gostdsym/stdsym@latest",
+  --   cmd = { "GoDoc" }, -- optional
+  --   opts = {}, -- see further down below for configuration
+  -- },
   {
     "maxandron/goplements.nvim",
     --- 在 interface 名称后显示其所有实现者
@@ -158,18 +158,19 @@ return {
       },
     },
   },
+  -- {
+  --   "code-winder/go-fillstruct-vim",
+  --   --- 填充 go 的 struct 字段默认值
+  --   event = "VeryLazy",
+  --   cmd = { "GoFillStruct" },
+  -- },
   {
-    "code-winder/go-fillstruct-vim",
-    --- 填充 go 的 struct 字段默认值
-    event = "VeryLazy",
-    cmd = { "GoFillStruct" },
-  },
-  {
-    "code-winder/go.nvim",
+    "ray-x/go.nvim",
     dependencies = { -- optional packages
       "ray-x/guihua.lua",
       "neovim/nvim-lspconfig",
-      "nvim-treesitter/nvim-treesitter",
+      -- "nvim-treesitter/nvim-treesitter",
+      { "nvim-treesitter/nvim-treesitter", branch = "master", lazy = false, build = ":TSUpdate" },
     },
     opts = {
       -- lsp_keymaps = false,
@@ -177,13 +178,13 @@ return {
     },
     config = function(lp, opts)
       require("go").setup(opts)
-      local format_sync_grp = vim.api.nvim_create_augroup("GoFormat", {})
+      -- local format_sync_grp = vim.api.nvim_create_augroup("GoFormat", {})
       vim.api.nvim_create_autocmd("BufWritePre", {
         pattern = "*.go",
         callback = function()
           -- require("go.format").goimports()
         end,
-        group = format_sync_grp,
+        -- group = format_sync_grp,
       })
     end,
     event = { "CmdlineEnter" },
