@@ -37,7 +37,7 @@
   - leader-gb Git Blame Line
   - leader-gs Git Status
   - leader-gd Git Diff (Hunks)
-  - leader-gb Git branch
+  - leader-gB Git branch
   - leader-gl Git Log
   - leader-gL Git Log Line（当前文件当前行的变更历史）
   - leader-gf Git Log file
